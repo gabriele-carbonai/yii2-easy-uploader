@@ -1,0 +1,22 @@
+{
+    "name": "gomonkey/yii2-easy-uploader",
+    "description": "an easy way for make folders and upload images or file everywhere ",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","upload","image"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "gabriele carbonai - gomonkey",
+            "email": "gabriele.carbonai@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-imagine": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "gomonkey\\uploader\\": ""
+        }
+    }
+}
