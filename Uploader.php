@@ -15,18 +15,31 @@ class Uploader
 {
     /* Strings */
     public $baseFrontendUrl = "";
-    public $baseBackenddUrl = "";
+    public $baseBackendUrl = "";
 
     /* Booleans */
     public $rename = false;
     public $remove = false;
 
+    private $baseUrl;
     /* arrays */
-    public $folder = [];
+    public $folders = [];
+
+    public function __construct($base = "frontend")
+    {
+        $this->baseUrl = $base;
+
+    }
 
     public function upload($image, $folder){
 
         if( $image ) {
+
+            if( $this->baseUrl == "frontend" )
+                $this->baseUrl = Yii::$app->uploaders->baseFrontendUrl;
+            else
+                $this->baseUrl = Yii::$app->uploaders->baseBackendUrl;
+
 
             $this->folders($folder);
 
@@ -35,12 +48,12 @@ class Uploader
                 $image->name = Yii::$app->security->generateRandomString( 12 ) . ".{$ext[1]}";
             }
 
-            $image->saveAs($imageLocation = Yii::$app->uploaders->baseFrontendUrl."/".$folder  ."/" . $image->name);
+            $image->saveAs($imageLocation = $this->baseUrl."/".$folder  ."/" . $image->name);
 
 
-            foreach(Yii::$app->uploaders->folder as $f){
+            foreach(Yii::$app->uploaders->folders as $f){
 
-                $this->doResize($imageLocation,  $imageLocation = Yii::$app->uploaders->baseFrontendUrl."/".$folder  ."/".$f['name']."/" . $image->name, [
+                $this->doResize($imageLocation,  $imageLocation = $this->baseUrl."/".$folder  ."/".$f['name']."/" . $image->name, [
                     'quality' => $f["quality"],
                     'width' => $f["width"],
                 ]);
@@ -49,10 +62,11 @@ class Uploader
             }
 
             if( Yii::$app->uploaders->remove ){
-                unlink(Yii::$app->uploaders->baseFrontendUrl."/".$folder  ."/" . $image->name);
+                unlink($this->baseUrl."/".$folder  ."/" . $image->name);
             }
 
             return $image->name;
+
         }
 
     }
@@ -60,11 +74,11 @@ class Uploader
     private function folders( $folder ){
 
 
-        if( !file_exists( Yii::$app->uploaders->baseFrontendUrl."/".$folder ) ){
-            mkdir(Yii::$app->uploaders->baseFrontendUrl."/".$folder, 0777, true);
+        if( !file_exists( $this->baseUrl."/".$folder ) ){
+            mkdir($this->baseUrl."/".$folder, 0777, true);
 
-            foreach(Yii::$app->uploaders->folder as $f)
-                mkdir(Yii::$app->uploaders->baseFrontendUrl."/".$folder ."/".$f['name'] , 0777, true);
+            foreach(Yii::$app->uploaders->folders as $f)
+                mkdir($this->baseUrl."/".$folder ."/".$f['name'] , 0777, true);
         }
 
     }
