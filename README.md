@@ -115,9 +115,9 @@ Your backend path to image folder
 #### folders ( Type: `array`)
 
 The folders are not the primary.
-name[] = is the name of the folder
-quelity[] = is the quality of the uploaded image
-with[] = is the with of the image, the height will be scaled
+- name[] = is the name of the folder
+- quality[] = is the quality of the uploaded image
+- with[] = is the with of the image, the height will be scaled
 
 
 
