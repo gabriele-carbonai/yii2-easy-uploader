@@ -33,7 +33,7 @@ Add in your config file
 ```php
 'components' => [
         'uploaders' => [
-            'class' => 'common\components\Upload',
+            'class' => 'gomonkey\uploader\uploader',
             'baseFrontendUrl' => '/add_your_path/frontend/web/images',
             'baseBackendUrl' => '/add_your_path/backend/web/images',
             'rename' => true,
