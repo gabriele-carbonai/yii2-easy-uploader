@@ -122,7 +122,7 @@ Your backend path to image folder
 The folders are not the primary.
 - name[] = is the name of the folder
 - quality[] = is the quality of the uploaded image
-- with[] = is the with of the image, the height will be scaled
+- width[] = is the width of the image, the height will be scaled
 
 
 
