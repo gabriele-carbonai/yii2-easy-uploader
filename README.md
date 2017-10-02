@@ -80,8 +80,13 @@ $model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "a
 
 $model->image will have now the name of the uploaded image.
 
+You can make infinite folders.
+For example with user id:
+images/user/3/1200/imagename.jpg
 
-
+```php
+$model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "users/".Yii::$app->user->id );
+```
 
 #Paremeters 
 
