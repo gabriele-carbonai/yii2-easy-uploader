@@ -53,6 +53,9 @@ class Uploader
 
             foreach(Yii::$app->uploaders->folders as $f){
 
+                // Check if there are new folder in array
+                $this->isFolderExist($this->baseUrl."/".$folder  ."/".$f['name']."/"  );
+                
                 $this->doResize($imageLocation,  $imageLocation = $this->baseUrl."/".$folder  ."/".$f['name']."/" . $image->name, [
                     'quality' => $f["quality"],
                     'width' => $f["width"],
@@ -71,6 +74,11 @@ class Uploader
 
     }
 
+    /**
+     * @param $folder
+     *
+     * Create folders if not exists
+     */
     private function folders( $folder ){
 
 
@@ -79,6 +87,19 @@ class Uploader
 
             foreach(Yii::$app->uploaders->folders as $f)
                 mkdir($this->baseUrl."/".$folder ."/".$f['name'] , 0777, true);
+        }
+
+    }
+
+    /**
+     * @param $folder
+     *
+     * In that case array folders is changed
+     */
+    private function isFolderExist( $folder ){
+
+        if( !file_exists( $folder ) ){
+            mkdir($folder, 0777, true);
         }
 
     }
