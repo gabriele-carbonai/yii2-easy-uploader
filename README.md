@@ -37,23 +37,29 @@ Add in your config file
             'baseFrontendUrl' => '/add_your_path/frontend/web/images',
             'baseBackendUrl' => '/add_your_path/backend/web/images',
             'rename' => true,
-            'remove' => true, // Remove the original file
+            'remove' => true, // Remove the original file 
             'folders' => [
                 [
                     'name' => '1200',
-                    'quality' => '70',
+                    'quality' => 70,
                     'width' => 1200
                 ],
                 [
                     'name' => '800',
-                    'quality' => '70',
-                    'width' => '800'
+                    'quality' => 70,
+                    'width' => 800
                 ],
                 [
                     'name' => '600',
-                    'quality' => '70',
-                    'width' => '600'
+                    'quality' => 70,
+                    'width' => 600
+                ],
+                [
+                    'name' => 'avatars',
+                    'quality' => 70,
+                    'width' => 200
                 ]
+             
             ]
 
         ],
