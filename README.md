@@ -1,3 +1,5 @@
+[![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
+
 Easy uploader extension for yii2
 ================================
 an easy way for make folders and upload images with one simple code line.
