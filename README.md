@@ -35,8 +35,8 @@ Add in your config file ( common/config/main.php ) for using in frontend and bac
 'components' => [
         'uploaders' => [
             'class' => 'gomonkey\uploader\uploader',
-            'baseFrontendUrl' => '/add_your_path/frontend/web/images',
-            'baseBackendUrl' => '/add_your_path/backend/web/images',
+            'baseFrontendUrl' =>   dirname(dirname(__DIR__)) . '/frontend/web/images',
+            'baseBackendUrl' => dirname(dirname(__DIR__)) . '/backend/web/images',
             'rename' => true, // Rename file 
             'random' => 12 // random alphanumeric name
             'remove' => true, // Remove original file after upload
