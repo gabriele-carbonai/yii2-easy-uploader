@@ -37,8 +37,9 @@ Add in your config file ( common/config/main.php ) for using in frontend and bac
             'class' => 'gomonkey\uploader\uploader',
             'baseFrontendUrl' => '/add_your_path/frontend/web/images',
             'baseBackendUrl' => '/add_your_path/backend/web/images',
-            'rename' => true,
-            'remove' => true, // Remove the original file 
+            'rename' => true, // Rename file 
+            'random' => 12 // random alphanumeric name
+            'remove' => true, // Remove original file after upload
             'folders' => [
                 [
                     'name' => '1200',
@@ -114,7 +115,7 @@ And do not forget multipart/form-data to your form
 ]); ?>
 ```
 
-#Paremeters 
+### Paremeters 
 
 
 ---
@@ -128,6 +129,12 @@ Will rename your uploaded file, set to false if you don't want to change the fil
 #### remove (Type: `boolean`, Default value: `true`)
 
 Remove the original file
+
+---
+
+#### random (Type: `integer`, Default value: 10)
+
+Random is the length of the alphanumeric image name
 
 ---
 
@@ -145,10 +152,11 @@ Your backend path to image folder
 
 #### folders ( Type: `array`)
 
-The folders are not the primary.
+The folders are not the primary, these must be set in controller
 - name[] = is the name of the folder
 - quality[] = is the quality of the uploaded image
 - width[] = is the width of the image, the height will be scaled
+
 
 
 

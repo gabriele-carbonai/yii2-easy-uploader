@@ -13,6 +13,9 @@ use yii\imagine\Image;
 
 class Uploader
 {
+    /* integers */
+    public $random = 10;
+
     /* Strings */
     public $baseFrontendUrl = "";
     public $baseBackendUrl = "";
@@ -45,7 +48,7 @@ class Uploader
 
             if(Yii::$app->uploaders->rename) {
                 $ext = explode( ".", $image->name );
-                $image->name = Yii::$app->security->generateRandomString( 12 ) . ".{$ext[1]}";
+                $image->name = Yii::$app->security->generateRandomString( Yii::$app->uploaders->random ) . ".{$ext[1]}";
             }
 
             $image->saveAs($imageLocation = $this->baseUrl."/".$folder  ."/" . $image->name);
