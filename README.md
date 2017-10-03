@@ -157,6 +157,8 @@ The folders are not the primary, these must be set in controller
 - quality[] = is the quality of the uploaded image
 - width[] = is the width of the image, the height will be scaled
 
+[![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
+
 
 
 
