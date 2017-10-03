@@ -2,7 +2,7 @@
     "name": "gomonkey/yii2-easy-uploader",
     "description": "an easy way for make folders and upload images or file everywhere ",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension","upload","image"],
+    "keywords": ["yii2","extension","upload","image", "file upload", "images upload", "image resize", "image manipulation"],
     "license": "MIT",
     "authors": [
         {

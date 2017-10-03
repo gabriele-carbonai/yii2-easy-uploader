@@ -94,6 +94,14 @@ images/user/3/1200/imagename.jpg
 $model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "users/".Yii::$app->user->id );
 ```
 
+And do not forget multipart/form-data to your form
+
+```php
+<?php $form = ActiveForm::begin([
+    'options' => ['enctype'=>'multipart/form-data']
+]); ?>
+```
+
 #Paremeters 
 
 

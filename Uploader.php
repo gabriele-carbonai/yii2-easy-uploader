@@ -55,7 +55,7 @@ class Uploader
 
                 // Check if there are new folder in array
                 $this->isFolderExist($this->baseUrl."/".$folder  ."/".$f['name']."/"  );
-                
+
                 $this->doResize($imageLocation,  $imageLocation = $this->baseUrl."/".$folder  ."/".$f['name']."/" . $image->name, [
                     'quality' => $f["quality"],
                     'width' => $f["width"],
