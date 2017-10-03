@@ -1,6 +1,6 @@
 Easy uploader extension for yii2
 ================================
-an easy way for make folders and upload images or file everywhere 
+an easy way for make folders and upload images with one simple code line.
 
 Installation
 ------------
@@ -73,18 +73,26 @@ In your controller action  :
 ```php
 $upload = new Yii::$app->uploaders();
 
-
 /**
 If you want to use backend path:
 
 $upload = new Yii::$app->uploaders("backend");
 **/
 
-
 $model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "avatars" );
 ```
 
 $model->image will have now the name of the uploaded image.
+
+### multiple uploads
+
+```php
+foreach(  UploadedFile::getInstances($model, 'image') as $file  )
+{
+    $model->image =  ( new Yii::$app->uploaders() )->upload( $file, "new/test" );
+    
+}
+```
 
 You can make infinite folders.
 For example with user id:
