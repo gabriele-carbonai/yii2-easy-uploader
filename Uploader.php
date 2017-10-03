@@ -19,12 +19,12 @@ class Uploader
     /* Strings */
     public $baseFrontendUrl = "";
     public $baseBackendUrl = "";
+    private $baseUrl;
 
     /* Booleans */
     public $rename = false;
     public $remove = false;
 
-    private $baseUrl;
     /* arrays */
     public $folders = [];
 
@@ -109,8 +109,7 @@ class Uploader
 
     public function doResize($imageLocation, $imageDestination, Array $options = null)
     {
-
-        $newWidth = $newHeight = 0;
+        
         list($width, $height) = getimagesize($imageLocation);
 
         if(isset($options['width']) || isset($options['height']))
