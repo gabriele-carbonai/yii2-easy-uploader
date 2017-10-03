@@ -26,8 +26,9 @@ to the require section of your `composer.json` file.
 Usage 
 -----
 
-Add in your config file 
-( common/config/main.php )
+### Parameters
+
+Add in your config file ( common/config/main.php ) for using in frontend and backend
 
 
 ```php
@@ -68,6 +69,8 @@ Add in your config file
 if you use basic template, you can still use the same code above, just put the code in you config file and change baseFrontendUrl.
 You can remove or comment baseBackendUrl
 
+### single image upload
+
 In your controller action  :
 
 ```php
@@ -75,24 +78,25 @@ $upload = new Yii::$app->uploaders();
 
 /**
 If you want to use backend path:
-
 $upload = new Yii::$app->uploaders("backend");
 **/
 
 $model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "avatars" );
 ```
 
-$model->image will have now the name of the uploaded image.
+$model->image now have the name of the uploaded image, ready to save it in database.
 
 ### multiple uploads
 
 ```php
 foreach(  UploadedFile::getInstances($model, 'image') as $file  )
 {
-    $model->image =  ( new Yii::$app->uploaders() )->upload( $file, "new/test" );
+    $model->image =  ( new Yii::$app->uploaders() )->upload( $file, "avatars" );
     
 }
 ```
+
+### infinite folders generation
 
 You can make infinite folders.
 For example with user id:
