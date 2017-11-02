@@ -45,10 +45,10 @@ class Uploader
 
 
             $this->folders($folder);
-
+			// Fixed
             if(Yii::$app->uploaders->rename) {
-                $ext = explode( ".", $image->name );
-                $image->name = Yii::$app->security->generateRandomString( Yii::$app->uploaders->random ) . ".{$ext[1]}";
+	           $ext = substr($image->name, strrpos($image->name, '.') + 1);
+               $image->name = Yii::$app->security->generateRandomString( Yii::$app->uploaders->random ) . ".{$ext}";
             }
 
             $image->saveAs($imageLocation = $this->baseUrl."/".$folder  ."/" . $image->name);
@@ -109,7 +109,7 @@ class Uploader
 
     public function doResize($imageLocation, $imageDestination, Array $options = null)
     {
-        
+
         list($width, $height) = getimagesize($imageLocation);
 
         if(isset($options['width']) || isset($options['height']))
