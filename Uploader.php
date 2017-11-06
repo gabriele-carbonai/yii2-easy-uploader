@@ -34,50 +34,64 @@ class Uploader
 
     }
 
-    public function upload($image, $folder){
+	/**
+	 * @param $image
+	 * @param $folder
+	 *
+	 * @return string
+	 */
+	public function upload($image, $folder){
 
-        if( $image ) {
+        if( !$image )
+        	return false;
 
-            if( $this->baseUrl == "frontend" )
-                $this->baseUrl = Yii::$app->uploaders->baseFrontendUrl;
-            else
-                $this->baseUrl = Yii::$app->uploaders->baseBackendUrl;
+        $this->baseUrl = $this->baseUrl == "frontend" ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
 
+        $this->folders($folder);
+		// Fixed
+        if(Yii::$app->uploaders->rename) {
+           $ext = substr($image->name, strrpos($image->name, '.') + 1);
+           $image->name = Yii::$app->security->generateRandomString( Yii::$app->uploaders->random ) . ".{$ext}";
+        }
 
-            $this->folders($folder);
-			// Fixed
-            if(Yii::$app->uploaders->rename) {
-	           $ext = substr($image->name, strrpos($image->name, '.') + 1);
-               $image->name = Yii::$app->security->generateRandomString( Yii::$app->uploaders->random ) . ".{$ext}";
-            }
+        $image->saveAs($imageLocation = $this->baseUrl."/".$folder  ."/" . $image->name);
 
-            $image->saveAs($imageLocation = $this->baseUrl."/".$folder  ."/" . $image->name);
+        foreach(Yii::$app->uploaders->folders as $f){
 
+            // Check if there are new folder in array
+            $this->isFolderExist($this->baseUrl."/".$folder  ."/".$f['name']."/"  );
 
-            foreach(Yii::$app->uploaders->folders as $f){
+            $this->doResize($imageLocation,  $imageLocation = $this->baseUrl."/".$folder  ."/".$f['name']."/" . $image->name, [
+                'quality' => $f["quality"],
+                'width' => $f["width"],
+            ]);
 
-                // Check if there are new folder in array
-                $this->isFolderExist($this->baseUrl."/".$folder  ."/".$f['name']."/"  );
-
-                $this->doResize($imageLocation,  $imageLocation = $this->baseUrl."/".$folder  ."/".$f['name']."/" . $image->name, [
-                    'quality' => $f["quality"],
-                    'width' => $f["width"],
-                ]);
-
-
-            }
-
-            if( Yii::$app->uploaders->remove ){
-                unlink($this->baseUrl."/".$folder  ."/" . $image->name);
-            }
-
-            return $image->name;
 
         }
 
+        if( Yii::$app->uploaders->remove ){
+            unlink($this->baseUrl."/".$folder  ."/" . $image->name);
+        }
+
+        return $image->name;
+
     }
 
-    /**
+	/**
+	 * @param $image
+	 * @param $folder
+	 */
+	public function delete($image, $folder){
+
+		$this->baseUrl = $this->baseUrl == "frontend" ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
+
+		if ( ! empty( Yii::$app->uploaders ) ) {
+			foreach(Yii::$app->uploaders->folders as $f)
+				unlink($this->baseUrl . $folder ."/".$f["name"]."/".$image );
+		}
+	}
+
+	/**
      * @param $folder
      *
      * Create folders if not exists
@@ -110,7 +124,10 @@ class Uploader
     public function doResize($imageLocation, $imageDestination, Array $options = null)
     {
 
-        list($width, $height) = getimagesize($imageLocation);
+	    list($width, $height) = @getimagesize($imageLocation);
+
+	    if(!$width)
+		    exit();
 
         if(isset($options['width']) || isset($options['height']))
         {
