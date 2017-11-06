@@ -117,6 +117,20 @@ And do not forget multipart/form-data to your form
 ]); ?>
 ```
 
+### Delete images from folder
+
+New method
+
+If you need to delete one or more images from all folders:
+
+( new Yii::$app->uploaders() )->delete( file, folder );
+ 
+for example:
+```php
+ ( new Yii::$app->uploaders() )->delete( $model->name, "/products/".Yii::$app->user->id );
+```
+It remove all images in your path/products/user id/others setted folder/file
+
 ### Paremeters 
 
 
