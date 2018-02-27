@@ -36,7 +36,7 @@ Add in your config file ( common/config/main.php ) for using in frontend and bac
 ```php
 'components' => [
         'uploaders' => [
-            'class' => 'gomonkey\uploader\uploader',
+            'class' => 'gomonkey\uploader\Uploader',
             'baseFrontendUrl' =>   dirname(dirname(__DIR__)) . '/frontend/web/images',
             'baseBackendUrl' => dirname(dirname(__DIR__)) . '/backend/web/images',
             'rename' => true, // Rename file 
