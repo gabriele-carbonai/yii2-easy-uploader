@@ -40,7 +40,7 @@ Add in your config file ( common/config/main.php ) for using in frontend and bac
             'baseFrontendUrl' =>   dirname(dirname(__DIR__)) . '/frontend/web/images',
             'baseBackendUrl' => dirname(dirname(__DIR__)) . '/backend/web/images',
             'rename' => true, // Rename file 
-            'random' => 12 // random alphanumeric name
+            'random' => 12, // random alphanumeric name
             'remove' => true, // Remove original file after upload
             'folders' => [
                 [
