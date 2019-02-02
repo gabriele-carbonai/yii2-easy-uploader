@@ -147,7 +147,6 @@ class Uploader
         return Image::thumbnail($imageLocation, (int)$newWidth, (int)$newHeight)->save($imageDestination,
             [
                 'quality' => isset($options['quality']) ? $options['quality'] : 100,
-
             ]
         );
     }
