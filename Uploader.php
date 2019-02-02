@@ -33,34 +33,34 @@ class Uploader
         $this->baseUrl = $base;
     }
 
-	/**
-	 * @param $image
-	 * @param $folder
-	 *
-	 * @return string
-	 */
-	public function upload($image, $folder)
+    /**
+     * @param $image
+     * @param $folder
+     *
+     * @return string
+     * @throws
+     */
+    public function upload($image, $folder)
     {
         if (!$image) {
             return false;
         }
 
         $this->baseUrl == "frontend" ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
-
         $this->folders($folder);
-		// Fixed
+
         if (Yii::$app->uploaders->rename) {
-           $ext = substr($image->name, strrpos($image->name, '.') + 1);
-           $image->name = Yii::$app->security->generateRandomString(Yii::$app->uploaders->random) . ".{$ext}";
+            $ext = substr($image->name, strrpos($image->name, '.') + 1);
+            $image->name = Yii::$app->security->generateRandomString(Yii::$app->uploaders->random) . ".{$ext}";
         }
 
-        $image->saveAs($imageLocation = $this->baseUrl."/".$folder  ."/" . $image->name);
+        $image->saveAs($imageLocation = $this->baseUrl . "/" . $folder . "/" . $image->name);
 
         foreach (Yii::$app->uploaders->folders as $f) {
             // Check if there are new folder in array
-            $this->isFolderExist($this->baseUrl."/".$folder  ."/".$f['name']."/"  );
+            $this->isFolderExist($this->baseUrl . "/" . $folder . "/" . $f['name'] . "/");
 
-            $this->doResize($imageLocation, $this->baseUrl."/".$folder."/".$f['name']."/".$image->name,
+            $this->doResize($imageLocation, $this->baseUrl . "/" . $folder . "/" . $f['name'] . "/" . $image->name,
                 [
                     'quality' => $f["quality"],
                     'width' => $f["width"],
@@ -68,38 +68,38 @@ class Uploader
         }
 
         if (Yii::$app->uploaders->remove) {
-            unlink($this->baseUrl."/".$folder  ."/" . $image->name);
+            unlink($this->baseUrl . "/" . $folder . "/" . $image->name);
         }
 
         return $image->name;
     }
 
-	/**
-	 * @param $image
-	 * @param $folder
-	 */
-	public function delete($image, $folder)
+    /**
+     * @param $image
+     * @param $folder
+     */
+    public function delete($image, $folder)
     {
-		$this->baseUrl == "frontend" ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
+        $this->baseUrl == "frontend" ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
 
-		if (!empty( Yii::$app->uploaders)) {
-			foreach (Yii::$app->uploaders->folders as $f) {
+        if (!empty(Yii::$app->uploaders)) {
+            foreach (Yii::$app->uploaders->folders as $f) {
                 unlink($this->baseUrl . $folder . "/" . $f["name"] . "/" . $image);
             }
-		}
-	}
+        }
+    }
 
-	/**
+    /**
      * @param $folder
      *
      * Create folders if not exists
      */
     private function folders($folder)
     {
-        if (!file_exists( $this->baseUrl."/".$folder )) {
-            mkdir($this->baseUrl."/".$folder, 0777, true);
+        if (!file_exists($this->baseUrl . "/" . $folder)) {
+            mkdir($this->baseUrl . "/" . $folder, 0777, true);
             foreach (Yii::$app->uploaders->folders as $f) {
-                mkdir($this->baseUrl."/".$folder."/".$f['name'], 0777, true);
+                mkdir($this->baseUrl . "/" . $folder . "/" . $f['name'], 0777, true);
             }
         }
     }
@@ -111,17 +111,16 @@ class Uploader
      */
     private function isFolderExist($folder)
     {
-        if (!file_exists($folder))
-        {
+        if (!file_exists($folder)) {
             mkdir($folder, 0777, true);
         }
     }
 
     public function doResize($imageLocation, $imageDestination, Array $options = null)
     {
-	    list($width, $height) = @getimagesize($imageLocation);
+        list($width, $height) = @getimagesize($imageLocation);
 
-	    if (!$width) {
+        if (!$width) {
             exit();
         }
 
@@ -129,7 +128,7 @@ class Uploader
             if (isset($options['width']) && isset($options['height'])) {
                 $newWidth = $options['width'];
                 $newHeight = $options['width'];
-            } else if (isset($options['width'])){
+            } else if (isset($options['width'])) {
                 $deviationPercentage = (($width - $options['width']) / (0.01 * $width)) / 100;
                 $newWidth = $options['width'];
                 $newHeight = $height - ($height * $deviationPercentage);
@@ -145,7 +144,7 @@ class Uploader
             $newHeight = $height * ((100 - $reduceRatio) / 100);
         }
 
-        return Image::thumbnail($imageLocation, (int) $newWidth, (int) $newHeight)->save($imageDestination,
+        return Image::thumbnail($imageLocation, (int)$newWidth, (int)$newHeight)->save($imageDestination,
             [
                 'quality' => isset($options['quality']) ? $options['quality'] : 100,
 
