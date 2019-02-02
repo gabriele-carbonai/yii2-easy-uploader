@@ -31,7 +31,6 @@ class Uploader
     public function __construct($base = "frontend")
     {
         $this->baseUrl = $base;
-
     }
 
 	/**
