@@ -46,7 +46,7 @@ class Uploader
             return false;
         }
 
-        $this->baseUrl == "frontend" ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
+        $this->baseUrl = ($this->baseUrl == "frontend") ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
         $this->folders($folder);
 
         if (Yii::$app->uploaders->rename) {
@@ -80,8 +80,6 @@ class Uploader
      */
     public function delete($image, $folder)
     {
-        $this->baseUrl == "frontend" ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
-
         if (!empty(Yii::$app->uploaders)) {
             foreach (Yii::$app->uploaders->folders as $f) {
                 unlink($this->baseUrl . $folder . "/" . $f["name"] . "/" . $image);
@@ -97,9 +95,9 @@ class Uploader
     private function folders($folder)
     {
         if (!file_exists($this->baseUrl . "/" . $folder)) {
-            mkdir($this->baseUrl . "/" . $folder, 0664, true);
+            mkdir($this->baseUrl. "/" . $folder, 0777, true);
             foreach (Yii::$app->uploaders->folders as $f) {
-                mkdir($this->baseUrl . "/" . $folder . "/" . $f['name'], 0664, true);
+                mkdir($this->baseUrl . "/" . $folder . "/" . $f['name'], 0777, true);
             }
         }
     }
@@ -112,7 +110,7 @@ class Uploader
     private function isFolderExist($folder)
     {
         if (!file_exists($folder)) {
-            mkdir($folder, 0664, true);
+            mkdir($this->baseUrl . "/" . $folder, 0777, true);
         }
     }
 
