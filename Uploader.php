@@ -80,9 +80,11 @@ class Uploader
      */
     public function delete($image, $folder)
     {
+        $this->baseUrl = ($this->baseUrl == "frontend") ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
+
         if (!empty(Yii::$app->uploaders)) {
             foreach (Yii::$app->uploaders->folders as $f) {
-                unlink($this->baseUrl . $folder . "/" . $f["name"] . "/" . $image);
+                unlink($this->baseUrl . "/" . $folder . "/" . $f["name"] . "/" . $image);
             }
         }
     }

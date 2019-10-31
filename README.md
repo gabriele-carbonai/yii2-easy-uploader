@@ -72,7 +72,14 @@ Add in your config file ( common/config/main.php ) for using in frontend and bac
 if you use basic template, you can still use the same code above, just put the code in you config file and change baseFrontendUrl.
 You can remove or comment baseBackendUrl
 
-### single image upload
+### Controllers
+
+add UploadFile in your controller
+```php
+use yii\web\UploadedFile;
+```
+
+#### single image upload
 
 In your controller action  :
 
@@ -89,27 +96,28 @@ $model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "a
 
 $model->image now have the name of the uploaded image, ready to save it in database.
 
-### multiple uploads
+#### multiple uploads
 
 ```php
-foreach(  UploadedFile::getInstances($model, 'image') as $file  )
-{
-    $model->image =  ( new Yii::$app->uploaders() )->upload( $file, "avatars" );
+foreach (UploadedFile::getInstances($model, 'image') as $file) {
+    $model->image = (new Yii::$app->uploaders())->upload($file, "avatars");
     
 }
 ```
 
-### infinite folders generation
+#### infinite folders generation
 
 You can make infinite folders.
 For example with user id:
 images/user/3/1200/imagename.jpg
 
 ```php
-$model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "users/".Yii::$app->user->id );
+$model->image =  $upload->upload(UploadedFile::getInstance($model, 'image'), "users/".Yii::$app->user->id);
 ```
 
-And do not forget multipart/form-data to your form
+#### in your view
+
+do not forget to use multipart/form-data to your form
 
 ```php
 <?php $form = ActiveForm::begin([
@@ -117,9 +125,7 @@ And do not forget multipart/form-data to your form
 ]); ?>
 ```
 
-### Delete images from folder
-
-New method
+#### Delete images from folder
 
 If you need to delete one or more images from all folders:
 
@@ -127,7 +133,7 @@ If you need to delete one or more images from all folders:
  
 for example:
 ```php
- ( new Yii::$app->uploaders() )->delete( $model->name, "/products/".Yii::$app->user->id );
+ (new Yii::$app->uploaders())->delete($model->name, "/products/".Yii::$app->user->id);
 ```
 It remove all images in your path/products/user id/others setted folder/file
 
