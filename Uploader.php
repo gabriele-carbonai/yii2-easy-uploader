@@ -75,6 +75,48 @@ class Uploader
     }
 
     /**
+     * @param $urlImage
+     * @param $folder
+     *
+     * @return string
+     * @throws
+     */
+    public function uploadFromUrl($urlImage, $folder)
+    {
+
+        $this->baseUrl = ($this->baseUrl == "frontend") ? Yii::$app->uploaders->baseFrontendUrl : Yii::$app->uploaders->baseBackendUrl;
+        $this->folders($folder);
+
+        $imageLocation = $this->baseUrl . "/" . $folder . "/" . array_slice(explode('/', $urlImage), -1)[0];
+
+        copy($urlImage, $imageLocation);
+
+        $image = array_slice(explode('/', $urlImage), -1)[0];
+
+        if (Yii::$app->uploaders->rename) {
+            $ext = substr($image, strrpos($image, '.') + 1);
+            $image = Yii::$app->security->generateRandomString(Yii::$app->uploaders->random) . ".{$ext}";
+        }
+
+        foreach (Yii::$app->uploaders->folders as $f) {
+            // Check if there are new folder in array
+            $this->isFolderExist($this->baseUrl . "/" . $folder . "/" . $f['name'] . "/");
+
+            $this->doResize($imageLocation, $this->baseUrl . "/" . $folder . "/" . $f['name'] . "/" . $image,
+                [
+                    'quality' => $f["quality"],
+                    'width' => $f["width"],
+                ]);
+        }
+
+        if (file_exists($this->baseUrl . "/" . $folder . "/" . $image) && Yii::$app->uploaders->remove) {
+            unlink($this->baseUrl . "/" . $folder . "/" . $image);
+        }
+
+        return $image;
+    }
+
+    /**
      * @param $image
      * @param $folder
      */

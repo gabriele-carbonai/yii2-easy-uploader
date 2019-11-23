@@ -91,7 +91,7 @@ If you want to use backend path:
 $upload = new Yii::$app->uploaders("backend");
 **/
 
-$model->image =  $upload->upload( UploadedFile::getInstance($model, 'image'), "avatars" );
+$model->image =  $upload->upload(UploadedFile::getInstance($model, 'image'), "avatars");
 ```
 
 $model->image now have the name of the uploaded image, ready to save it in database.
@@ -104,6 +104,14 @@ foreach (UploadedFile::getInstances($model, 'image') as $file) {
     
 }
 ```
+
+#### upload from url
+Now it is possible to upload images from other website, using dynamic or static urls.
+ the same code can be used in a loop
+```php
+ $model->image = $upload->uploadFromUrl("https://www.website.it/url/to/image/image.jpg",  "myFolder");
+```
+N.B. no need upload instance
 
 #### infinite folders generation
 
