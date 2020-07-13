@@ -139,9 +139,9 @@ class Uploader
     private function folders($folder)
     {
         if (!file_exists($this->baseUrl . "/" . $folder)) {
-            mkdir($this->baseUrl. "/" . $folder, 0777, true);
+            mkdir($this->baseUrl. "/" . $folder, 0775, true);
             foreach (Yii::$app->uploaders->folders as $f) {
-                mkdir($this->baseUrl . "/" . $folder . "/" . $f['name'], 0777, true);
+                mkdir($this->baseUrl . "/" . $folder . "/" . $f['name'], 0775, true);
             }
         }
     }
@@ -154,7 +154,7 @@ class Uploader
     private function isFolderExist($folder)
     {
         if (!file_exists($folder)) {
-            mkdir($this->baseUrl . "/" . $folder, 0777, true);
+            mkdir($this->baseUrl . "/" . $folder, 0775, true);
         }
     }
 
